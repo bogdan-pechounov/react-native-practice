@@ -1,3 +1,2 @@
 expo init myproject
-yarn install
-yarn web
+expo start / npm start
