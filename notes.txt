@@ -1,0 +1,3 @@
+expo init myproject
+yarn install
+yarn web
