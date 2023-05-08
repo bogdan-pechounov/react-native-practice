@@ -1,6 +1,5 @@
 import { useFonts } from 'expo-font'
-import About from './screens/About'
-import Home from './screens/Home'
+import Navigator from './routes/homeStack'
 
 export default function App() {
   const [loaded] = useFonts({
@@ -8,5 +7,5 @@ export default function App() {
     'nunito-bold': require('./assets/fonts/Nunito/static/Nunito-Bold.ttf'),
   })
   if (!loaded) return
-  return <Home />
+  return <Navigator />
 }
