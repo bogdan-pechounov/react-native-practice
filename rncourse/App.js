@@ -1,20 +1,74 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar'
+import { useState } from 'react'
+import {
+  Button,
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
+import GoalInput from './components/GoalInput'
+import GoalItem from './components/GoalItem'
+import { Image } from 'react-native'
 
 export default function App() {
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [courseGoals, setCourseGoals] = useState([])
+
+  function modalHandler() {
+    setIsModalVisible(true)
+  }
+
+  function closeModal() {
+    setIsModalVisible(false)
+  }
+
+  function addGoalHandler(enteredGoalText) {
+    setCourseGoals((courseGoals) => [...courseGoals, enteredGoalText])
+    closeModal()
+  }
+
+  function deleteGoalHandler(id) {
+    setCourseGoals((courseGoals) => courseGoals.filter((_, i) => i !== id))
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <>
+      <StatusBar style='light' />
+      <SafeAreaView style={styles.appContainer}>
+        <Button title='Add New Goal' color='#5e0acc' onPress={modalHandler} />
+        <GoalInput
+          onAddGoal={addGoalHandler}
+          visible={isModalVisible}
+          closeModal={closeModal}
+        />
+        <View style={styles.goalsContainer}>
+          <FlatList
+            data={courseGoals}
+            renderItem={({ item, index }) => (
+              <GoalItem
+                item={item}
+                onDeleteItem={() => deleteGoalHandler(index)}
+              />
+            )}
+          />
+        </View>
+      </SafeAreaView>
+    </>
+  )
 }
 
 const styles = StyleSheet.create({
-  container: {
+  appContainer: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 50,
+    paddingHorizontal: 16,
   },
-});
+
+  goalsContainer: {
+    flex: 5,
+  },
+})
