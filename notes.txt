@@ -1,2 +1,4 @@
 expo init myproject
 expo start / npm start
+
+npx create-expo-app
